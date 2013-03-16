@@ -38,8 +38,9 @@ def getNextLink(page):
 # end getNextLink()
 
 
-def printLinks(page):
+def getLinks(page):
     # print all the links on the @page
+    links = []
 
     while True:
         link, endpos = getNextLink(page)
@@ -47,18 +48,19 @@ def printLinks(page):
         if link:
             # print only if its not the same page
             if link.find('#') == -1:
-                print link
+                links.append(link)
 
             page = page[endpos:]
         else:
             break
 
-    return
-# end printLinks()
+    return links
+# end getLinks()
 
 
 def main():
-    printLinks(getPage('localhost', '/index.html'))
+    links = getLinks(getPage('localhost', '/index.html'))
+    print links
 # end main()
 
 
