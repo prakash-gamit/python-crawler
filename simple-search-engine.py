@@ -30,7 +30,10 @@ def printLinks(page):
         start_quote = page.find('"', start_link)
         end_quote = page.find('"', start_quote + 1)
         link = page[(start_quote + 1) : end_quote]
-        print link
+
+        # print only if its not the same page
+        if link.find('#') == -1:
+            print link
 
         start_link = page.find('<a href=', end_quote)
 # end printLinks()
