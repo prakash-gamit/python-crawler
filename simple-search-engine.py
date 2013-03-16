@@ -22,23 +22,43 @@ def getPage(host, protocol, url):
 # end getPage()
 
 
-def printLinks(page):
-    # print all the links on the @page
+# return first link on the @page
+def getNextLink(page):
     start_link = page.find('<a href=')
 
-    while not (start_link == -1):
-        start_quote = page.find('"', start_link)
-        end_quote = page.find('"', start_quote + 1)
-        link = page[(start_quote + 1) : end_quote]
+    # stopping condition
+    if start_link == -1:
+        return None, 0
 
-        # print only if its not the same page
-        if link.find('#') == -1:
-            print link
+    start_quote = page.find('"', start_link)
+    end_quote = page.find('"', start_quote + 1)
+    link = page[(start_quote + 1) : end_quote]
 
-        start_link = page.find('<a href=', end_quote)
+    return link, end_quote
+# end getNextLink()
+
+
+def printLinks(page):
+    # print all the links on the @page
+
+    while True:
+        link, endpos = getNextLink(page)
+
+        if link:
+            # print only if its not the same page
+            if link.find('#') == -1:
+                print link
+
+            page = page[endpos:]
+        else:
+            break
+
+    return
 # end printLinks()
 
+
 def main():
+    printLinks(getPage('localhost', 'HTTP', '/index.html'))
 # end main()
 
 
