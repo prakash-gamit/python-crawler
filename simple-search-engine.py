@@ -6,13 +6,23 @@
 import httplib
 
 
-def getPage(host, url, protocol = 'HTTP'):
-    if protocol == 'HTTP':
+def getPage(url, protocol = 'http'):
+    temp1 = url.find('://')
+    if temp1 == -1:
+        temp = url.find('/')
+    else:
+        temp = url.find('/', temp1 + 3)
+        protocol = url[:temp1]
+
+    host = url[(temp1 + 3):temp]
+    resource = url[temp:]
+
+    if protocol == 'http':
         conn = httplib.HTTPConnection(host)
     else:
         conn = httplib.HTTPSConnection(host)
 
-    conn.request('GET', url)
+    conn.request('GET', resource)
     response = conn.getresponse()
 
     if response.status == 200:
@@ -67,7 +77,7 @@ def union(list1, list2):
 
 
 def main():
-    links = getLinks(getPage('localhost', '/index.html'))
+    links = getLinks(getPage('http://localhost/index.html'))
     print links
 # end main()
 
