@@ -76,6 +76,21 @@ def union(list1, list2):
 # end union
 
 
+def crawlWeb(seed):
+    tocrawl = [seed]
+    crawled = []
+
+    while tocrawl:
+        page = tocrawl.pop()
+        if page not in crawled:
+            union(tocrawl, getLinks(getPage(page)))
+            print tocrawl
+            crawled.append(page)
+
+    return crawled
+# end crawlWeb()
+
+
 def main():
     links = getLinks(getPage('http://localhost/index.html'))
     print links
