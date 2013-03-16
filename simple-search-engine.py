@@ -22,6 +22,19 @@ def getPage(host, protocol, url):
 # end getPage()
 
 
+def printLinks(page):
+    # print all the links on the @page
+    start_link = page.find('<a href=')
+
+    while not (start_link == -1):
+        start_quote = page.find('"', start_link)
+        end_quote = page.find('"', start_quote + 1)
+        link = page[(start_quote + 1) : end_quote]
+        print link
+
+        start_link = page.find('<a href=', end_quote)
+# end printLinks()
+
 def main():
 # end main()
 
