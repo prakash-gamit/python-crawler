@@ -70,8 +70,8 @@ def getLinks(page):
 
 # store union of @list1 and list2 in list1
 def union(list1, list2):
-    for item in list1:
-        if item not in list2:
+    for item in list2:
+        if item not in list1:
             list1.append(item)
 # end union
 
