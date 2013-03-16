@@ -6,7 +6,7 @@
 import httplib
 
 
-def getPage(host, protocol, url):
+def getPage(host, url, protocol = 'HTTP'):
     if protocol == 'HTTP':
         conn = httplib.HTTPConnection(host)
     else:
@@ -58,7 +58,7 @@ def printLinks(page):
 
 
 def main():
-    printLinks(getPage('localhost', 'HTTP', '/index.html'))
+    printLinks(getPage('localhost', '/index.html'))
 # end main()
 
 
