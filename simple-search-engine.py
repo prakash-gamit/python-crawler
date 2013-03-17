@@ -8,14 +8,10 @@ import httplib
 
 def getPage(url, protocol = 'http'):
     temp1 = url.find('://')
-    if temp1 == -1:
-        temp = url.find('/')
-    else:
-        temp = url.find('/', temp1 + 3)
-        protocol = url[:temp1]
+    temp2 = url.find('/', temp1 + 3)
 
-    host = url[(temp1 + 3):temp]
-    resource = url[temp:]
+    host = url[(temp1 + 3):temp2]
+    resource = url[temp2:]
 
     if protocol == 'http':
         conn = httplib.HTTPConnection(host)
