@@ -105,6 +105,14 @@ def lookup(index, keyword):
 # end lookup()
 
 
+# add words in @content to @index
+def addPageToIndex(index, url, content):
+    words = content.split()
+    for word in words:
+        addToIndex(index, word, url)
+# end addPageToIndex()
+
+
 def main():
     links = crawlWeb('http://localhost/test.html')
     print links
