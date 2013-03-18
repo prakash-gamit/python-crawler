@@ -75,14 +75,19 @@ def union(list1, list2):
 def crawlWeb(seed):
     tocrawl = [seed]
     crawled = []
+    index = []
 
     while tocrawl:
         page = tocrawl.pop()
         if page not in crawled:
-            union(tocrawl, getLinks(getPage(page)))
+            content = getPage(page)
+
+            addPageToIndex(index, page, content)
+
+            union(tocrawl, getLinks(content))
             crawled.append(page)
 
-    return crawled
+    return index
 # end crawlWeb()
 
 
@@ -114,8 +119,10 @@ def addPageToIndex(index, url, content):
 
 
 def main():
-    links = crawlWeb('http://localhost/test.html')
-    print links
+    index = crawlWeb('http://localhost/README.md')
+    print index
+
+    print lookup(index, 'simple')
 # end main()
 
 
