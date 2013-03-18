@@ -96,6 +96,15 @@ def addToIndex(index, keyword, url):
 # end addToIndex()
 
 
+# @lookup a keyword in @index and list of urls that contain that word
+def lookup(index, keyword):
+    for entry in index:
+        if entry[0] == keyword:
+            return entry[1]
+    return []
+# end lookup()
+
+
 def main():
     links = crawlWeb('http://localhost/test.html')
     print links
