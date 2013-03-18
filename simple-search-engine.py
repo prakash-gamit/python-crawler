@@ -80,15 +80,24 @@ def crawlWeb(seed):
         page = tocrawl.pop()
         if page not in crawled:
             union(tocrawl, getLinks(getPage(page)))
-            print tocrawl
             crawled.append(page)
 
     return crawled
 # end crawlWeb()
 
 
+# add a @keyword and @url to our @index
+def addToIndex(index, keyword, url):
+    for entry in index:
+        if entry[0] == keyword:
+            entry[1].append(url)
+            return
+    index.append([keyword, [url]])
+# end addToIndex()
+
+
 def main():
-    links = getLinks(getPage('http://localhost/index.html'))
+    links = crawlWeb('http://localhost/test.html')
     print links
 # end main()
 
