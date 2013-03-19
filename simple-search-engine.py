@@ -76,6 +76,7 @@ def crawlWeb(seed):
     tocrawl = [seed]
     crawled = []
     index = {}
+    graph = {}
 
     while tocrawl:
         page = tocrawl.pop()
@@ -84,10 +85,13 @@ def crawlWeb(seed):
 
             addPageToIndex(index, page, content)
 
-            union(tocrawl, getLinks(content))
+            outlinks = getLinks(content)
+            graph[page] = outlinks
+
+            union(tocrawl,outlinks)
             crawled.append(page)
 
-    return index
+    return index, graph
 # end crawlWeb()
 
 
@@ -117,10 +121,11 @@ def addPageToIndex(index, url, content):
 
 
 def main():
-    index = crawlWeb('http://localhost/README.md')
+    index, graph = crawlWeb('http://localhost/test.html')
     print index
+    print graph
 
-    print lookup(index, 'simple')
+    print lookup(index, 'test')
 # end main()
 
 
