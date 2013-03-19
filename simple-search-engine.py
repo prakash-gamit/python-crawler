@@ -130,7 +130,7 @@ def computeRanks(graph):
     for page in graph:
         ranks[page] = 1.0 / npages
 
-    for i in ranks(0, numloops):
+    for i in range(0, numloops):
         newranks = {}
         for page in graph:
             newrank = (1 - d) / npages
