@@ -75,7 +75,7 @@ def union(list1, list2):
 def crawlWeb(seed):
     tocrawl = [seed]
     crawled = []
-    index = []
+    index = {}
 
     while tocrawl:
         page = tocrawl.pop()
@@ -93,19 +93,17 @@ def crawlWeb(seed):
 
 # add a @keyword and @url to our @index
 def addToIndex(index, keyword, url):
-    for entry in index:
-        if entry[0] == keyword:
-            entry[1].append(url)
-            return
-    index.append([keyword, [url]])
+    if keyword in index:
+        index[keyword].append(url)
+    else:
+        index[keyword] = [url]
 # end addToIndex()
 
 
 # @lookup a keyword in @index and list of urls that contain that word
 def lookup(index, keyword):
-    for entry in index:
-        if entry[0] == keyword:
-            return entry[1]
+    if keyword in index:
+        return index[keyword]
     return []
 # end lookup()
 
