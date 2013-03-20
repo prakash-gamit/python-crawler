@@ -5,6 +5,9 @@
 
 import httplib
 
+# to use in getPageRank()
+pageRanks = {}
+
 
 def getPage(url, protocol = 'http'):
     temp1 = url.find('://')
@@ -146,12 +149,29 @@ def computeRanks(graph):
 # end computeRanks()
 
 
-def main():
-    index, graph = crawlWeb('http://localhost/test.html')
-    print index
-    print graph
+# return @pageRank of @url
+def getPageRank(url):
+    global pageRanks
+    return pageRanks[url]
 
-    print lookup(index, 'test')
+
+# return pages in sorted order of their ranks
+def lookupBest(index, keyword):
+    if keyword in index:
+        return sorted(index[keyword], key=getPageRank)
+
+    return []
+# end lookupBest()
+
+
+def main():
+    index, graph = crawlWeb('http://localhost/cs101-udacity/index.html')
+
+    ranks = computeRanks(graph)
+    global pageRanks
+    pageRanks = ranks
+
+    print lookupBest(index, 'Nickel')
 # end main()
 
 
