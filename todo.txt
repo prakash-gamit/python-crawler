@@ -1,0 +1,5 @@
+[TODO]
+
+o use *urllib2* instead of *httplib*
+
+o provide logging facility
