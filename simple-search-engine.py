@@ -3,43 +3,33 @@
 # Prakash Gamit <prakashgamit23@gmail.com>
 # Indian Institute of Technology, Roorkee
 
-import httplib
+import urllib2
 import argparse
 
 # to use in getPageRank()
 pageRanks = {}
 
 
-def getPage(url, protocol = 'http'):
+def getPage(url):
     """
     get webpage @url from the Internet
 
     @args
     url => url of webpage to retrieve
-    protocol => protocol to use for retrieving webpage
 
     @return => return contents of webpage if successful in retrieving @url
                else return None
     """
 
-    temp1 = url.find('://')
-    temp2 = url.find('/', temp1 + 3)
+    request = urllib2.Request(url)
 
-    host = url[(temp1 + 3):temp2]
-    resource = url[temp2:]
+    try:
+        response = urllib2.urlopen(request)
+        page = response.read()
+    except urllib2.URLError as e:
+        return
 
-    if protocol == 'http':
-        conn = httplib.HTTPConnection(host)
-    else:
-        conn = httplib.HTTPSConnection(host)
-
-    conn.request('GET', resource)
-    response = conn.getresponse()
-
-    if response.status == 200:
-        return response.read()
-
-    return
+    return page
 # end getPage()
 
 
