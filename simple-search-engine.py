@@ -118,12 +118,14 @@ def crawlWeb(seed):
         if page not in crawled:
             content = getPage(page)
 
-            addPageToIndex(index, page, content)
+            if content != None:
+                addPageToIndex(index, page, content)
 
-            outlinks = getLinks(content)
-            graph[page] = outlinks
+                outlinks = getLinks(content)
+                graph[page] = outlinks
 
-            union(tocrawl,outlinks)
+                union(tocrawl,outlinks)
+
             crawled.append(page)
 
     return index, graph
