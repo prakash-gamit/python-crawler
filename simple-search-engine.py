@@ -10,6 +10,17 @@ pageRanks = {}
 
 
 def getPage(url, protocol = 'http'):
+    """
+    get webpage @url from the Internet
+
+    @args
+    url => url of webpage to retrieve
+    protocol => protocol to use for retrieving webpage
+
+    @return => return contents of webpage if successful in retrieving @url
+               else return None
+    """
+
     temp1 = url.find('://')
     temp2 = url.find('/', temp1 + 3)
 
@@ -33,6 +44,15 @@ def getPage(url, protocol = 'http'):
 
 # return first link on the @page
 def getNextLink(page):
+    """
+    get next link from the page
+
+    @args
+    page => contents of webpage
+
+    @return => tuple containing link and end quote of link
+    """
+
     start_link = page.find('<a href=')
 
     # stopping condition
@@ -48,6 +68,15 @@ def getNextLink(page):
 
 
 def getLinks(page):
+    """
+    get all the links on the page
+
+    @args
+    page => contents of the webpage
+
+    @return => list of all the links on the @page
+    """
+
     # print all the links on the @page
     links = []
 
@@ -69,6 +98,18 @@ def getLinks(page):
 
 # store union of @list1 and list2 in list1
 def union(list1, list2):
+    """
+    take union of two lists
+
+    @args
+    list1 => first list
+    list2 => second list
+
+    store the union of two lists in @list1
+
+    @return => None
+    """
+
     for item in list2:
         if item not in list1:
             list1.append(item)
@@ -100,6 +141,10 @@ def crawlWeb(seed):
 
 # add a @keyword and @url to our @index
 def addToIndex(index, keyword, url):
+    """
+    add a @keyword and @url to @index
+    """
+
     if keyword in index:
         index[keyword].append(url)
     else:
@@ -109,6 +154,10 @@ def addToIndex(index, keyword, url):
 
 # @lookup a keyword in @index and list of urls that contain that word
 def lookup(index, keyword):
+    """
+    retrieve urls whose content contain @keyword from @index
+    """
+
     if keyword in index:
         return index[keyword]
     return []
@@ -117,6 +166,10 @@ def lookup(index, keyword):
 
 # add words in @content to @index
 def addPageToIndex(index, url, content):
+    """
+    add all the words in page to @index
+    """
+
     words = content.split()
     for word in words:
         addToIndex(index, word, url)
@@ -124,6 +177,10 @@ def addPageToIndex(index, url, content):
 
 
 def computeRanks(graph):
+    """
+    compute page ranks of the urls
+    """
+
     d = 0.8 # damping factor
     numloops = 10
 
@@ -151,12 +208,21 @@ def computeRanks(graph):
 
 # return @pageRank of @url
 def getPageRank(url):
+    """
+    return page rank of @url
+    """
+
     global pageRanks
     return pageRanks[url]
 
 
 # return pages in sorted order of their ranks
 def lookupBest(index, keyword):
+    """
+    return list of urls that contain @keyword sorted according to their
+        page ranks
+    """
+
     if keyword in index:
         return sorted(index[keyword], key=getPageRank)
 
