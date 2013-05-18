@@ -4,6 +4,7 @@
 # Indian Institute of Technology, Roorkee
 
 import httplib
+import argparse
 
 # to use in getPageRank()
 pageRanks = {}
@@ -231,7 +232,13 @@ def lookupBest(index, keyword):
 
 
 def main():
-    index, graph = crawlWeb('http://localhost/cs101-udacity/index.html')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('seed', help='seed page for starting crawling')
+    args = parser.parse_args()
+
+    seedPage = args.seed
+
+    index, graph = crawlWeb(seedPage)
 
     ranks = computeRanks(graph)
     global pageRanks
