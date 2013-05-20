@@ -5,6 +5,7 @@
 
 import urllib2
 import argparse
+import logging
 
 # to use in getPageRank()
 pageRanks = {}
@@ -229,6 +230,14 @@ def main():
     parser.add_argument('-v', '--verbose', action = 'count', default = 0,
                         help = 'increase verbosity of output')
     args = parser.parse_args()
+
+    # set loglevel based on command line options
+    if args.verbose == 2:
+        loglevel = logging.DEBUG
+    elif args.verbose == 1:
+        loglevel = logging.INFO
+    else:
+        loglevel = logging.WARNING
 
     seedPage = args.seed
 
