@@ -226,6 +226,8 @@ def lookupBest(index, keyword):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('seed', help='seed page for starting crawling')
+    parser.add_argument('-v', '--verbose', action = 'count', default = 0,
+                        help = 'increase verbosity of output')
     args = parser.parse_args()
 
     seedPage = args.seed
