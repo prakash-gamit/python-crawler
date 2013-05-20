@@ -239,6 +239,9 @@ def main():
     else:
         loglevel = logging.WARNING
 
+    # configure logging
+    logging.basicConfig(format="%(levelname)s:%(message)s", level=loglevel)
+
     seedPage = args.seed
 
     index, graph = crawlWeb(seedPage)
