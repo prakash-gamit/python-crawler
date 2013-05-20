@@ -22,12 +22,16 @@ def getPage(url):
                else return None
     """
 
+    logging.info("Requesting %s", url)
     request = urllib2.Request(url)
 
     try:
         response = urllib2.urlopen(request)
         page = response.read()
+        logging.info("Received %s", url)
     except urllib2.URLError as e:
+        logging.warning("Error Retrieving %s", url)
+        logging.info("Reason: %s", e.reason)
         return
 
     return page
@@ -116,13 +120,18 @@ def crawlWeb(seed):
 
     while tocrawl:
         page = tocrawl.pop()
+        logging.info("Crawling %s", page)
         if page not in crawled:
             content = getPage(page)
 
             if content != None:
+                logging.debug("Adding %s to index", page)
                 addPageToIndex(index, page, content)
+                logging.debug("Added %s to index", page)
 
+                logging.debug("Getting all links from page %s", page)
                 outlinks = getLinks(content)
+                logging.debug("Got all links from page %s", page)
                 graph[page] = outlinks
 
                 union(tocrawl,outlinks)
@@ -139,6 +148,7 @@ def addToIndex(index, keyword, url):
     add a @keyword and @url to @index
     """
 
+    logging.debug("Adding (%s, %s) to index", keyword, url)
     if keyword in index:
         index[keyword].append(url)
     else:
@@ -152,6 +162,7 @@ def lookup(index, keyword):
     retrieve urls whose content contain @keyword from @index
     """
 
+    logging.debug("Searching %s in index", keyword)
     if keyword in index:
         return index[keyword]
     return []
@@ -243,10 +254,16 @@ def main():
     logging.basicConfig(format="%(levelname)s:%(message)s", level=loglevel)
 
     seedPage = args.seed
+    logging.info("Seed page = %s", seedPage)
 
+    logging.info("Starting crawling...")
     index, graph = crawlWeb(seedPage)
+    logging.info("Finished crawling...")
 
+    logging.info("Computing Page Ranks")
     ranks = computeRanks(graph)
+    logging.info("Computed Page Ranks")
+
     global pageRanks
     pageRanks = ranks
 
