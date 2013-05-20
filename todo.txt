@@ -1,5 +1,18 @@
 [TODO]
 
-o use *urllib2* instead of *httplib*
+o use multithreading to fetch urls
+    * put the fetched page in queue
+    * crawler gets page from queue
+
+o chnage project name
+    search-engine => site-scrapper
+
+o improve indexing
+    * do not include html tags in index
+
+
+[DONE]
 
 o provide logging facility
+
+o use *urllib2* instead of *httplib*
