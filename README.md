@@ -1,5 +1,5 @@
-simple-search-engine
+scrapper
 ====================
 
-simple search engine written in python
+a simple site scrapper written in python
 
